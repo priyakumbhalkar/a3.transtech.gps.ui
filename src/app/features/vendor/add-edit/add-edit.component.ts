@@ -50,9 +50,9 @@ export class AddEditComponent implements OnInit {
       code: [rowData.code, Validators.required],
       name: [rowData.name, Validators.required],
       description: [rowData.description],
-      email: [rowData.mail, [Validators.required, Validators.email]],
-      phone: [rowData.phone, [Validators.required, Validators.maxLength(10)]],
-      mobile: [rowData.mobile, [Validators.required, Validators.maxLength(10)]],
+      email: [rowData.mail, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      phone: [rowData.phone, Validators.required],
+      mobile: [rowData.mobile, Validators.required],
     });
     if (!this.rowData.vendorId) {
       this.vendorForm.addControl(
@@ -87,6 +87,15 @@ export class AddEditComponent implements OnInit {
     this.submitted = false;
     this.vendorForm.reset();
   }
+
+  onCancel() {
+    this.submitted= false;
+  }
+
+ /* cancel() {
+    this.ref.close(null);
+  }
+  */
   submitVendor(formValue) {
     const vendor = {
       code: formValue.code,
