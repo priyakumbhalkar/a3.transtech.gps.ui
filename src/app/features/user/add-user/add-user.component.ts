@@ -26,7 +26,8 @@ export class AddUserComponent implements OnInit {
     createdBy: "",
     createdDate: "",
     email: "",
-    phone: "",
+    contactprimary:"",
+    contactsecondary:"",
     lastVisit: "",
     userName: "",
     style: "",
@@ -65,8 +66,9 @@ export class AddUserComponent implements OnInit {
 
   createForm(rowData) {
     this.userForm = this.formBuilder.group({
-      email: [rowData.email, [Validators.required, Validators.email]],
-      phone: [rowData.phone, [Validators.required, Validators.maxLength(10)]],
+      email: [rowData.mail, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      contactprimary: [rowData.contactprimary, Validators.required],
+      contactsecondary: [rowData.contactsecondary],
       userName: [rowData.userName, Validators.required],
       password: [rowData.password, Validators.required],
       vendorId: this.rowData?.userId ? [{value: rowData.vendorId?.toString(), disabled: true}, Validators.required]: [rowData.vendorId?.toString(), Validators.required],
@@ -81,6 +83,10 @@ export class AddUserComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.userForm.reset();
+  }
+
+  onCancel() {
+    this.submitted= false;
   }
 
   onSubmit() {
@@ -106,7 +112,8 @@ export class AddUserComponent implements OnInit {
         userName: formValue.userName,
         password: formValue.password,
         email: formValue.email,
-        phone: formValue.phone,
+        contactprimary: formValue.contactprimary,
+        contactsecondary:formValue.contactsecondary,
         userId: 0,
       })
       .subscribe((user) => {
@@ -125,7 +132,8 @@ export class AddUserComponent implements OnInit {
       userName: formValue.userName,
       password: formValue.password,
       email: formValue.email,
-      phone: formValue.phone,
+      contactprimary: formValue.contactprimary,
+      contactsecondary:formValue.contactsecondary,
     };
     this.userSvc.updateUser(user).subscribe((res) => {
       this._notificationSvc.success("Success", "User updated successfully");
