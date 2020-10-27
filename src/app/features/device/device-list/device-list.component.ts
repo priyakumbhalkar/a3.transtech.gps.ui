@@ -110,11 +110,17 @@ export class DeviceListComponent implements OnInit {
     if (e.action === "edit") {
       this.router.navigate(["/Device/add-edit"], { state: this.selectedRow });
     }
+    if (e.action === "delete") {
+      this.deviceSvc.deleteDevice(this.selectedRow).subscribe((res) => {
+        this.loadData();
+      });
+    }
     if (e.action === "view") {
       this.router.navigate(["/Alarm"], { state: this.selectedRow });
     }
   }
-  setActionItem() {
+  
+ setActionItem() {
     this.actionItems = [];
     this.defaultActionItem = [];
     const actions = this.auth.getActions("Device");
