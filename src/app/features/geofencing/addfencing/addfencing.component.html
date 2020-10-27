@@ -39,6 +39,7 @@
                     type="text"
                     formControlName="name"
                     class="form-control"
+                    pattern="^[A-Za-z][A-Za-z ]+$"
                     [ngClass]="{
                       'is-invalid': form.name.touched && form.name.errors
                     }"
@@ -48,7 +49,10 @@
                     class="invalid-feedback"
                   >
                     <div *ngIf="form.name.errors.required">
-                      Name is required
+                      *Name is required.
+                    </div>
+                    <div *ngIf="form.name.errors.pattern">
+                      *Please provide Valid Name.
                     </div>
                   </div>
                 </div>
@@ -89,13 +93,12 @@
                     type="submit"
                     class="btn btn-block btn-primary"
                     style="width: 120px"
-                    [disabled]="a3FormGroup.invalid || !selectedShape"
-                  >
+                   >
                     Submit
                   </button>
                   <button
                     type="reset"
-                    style="width: 120px; height: 35px; margin-left: 30px"
+                    style="width: 120px; height: 35px; margin-left: 40px"
                     class="btn btn-sm btn-danger"
                   >
                     Reset
